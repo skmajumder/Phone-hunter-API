@@ -1,19 +1,60 @@
 "use strict";
 
-const loadPhone = async (brand) => {
+// Get elements
+const showAllSection = document.getElementById("section-show-all");
+
+const toggleSpinner = (isLoading) => {
+  const sectionSpinnerEl = document.getElementById("section-spinner");
+  if (isLoading) {
+    sectionSpinnerEl.classList.remove("d-none");
+  } else {
+    sectionSpinnerEl.classList.add("d-none");
+  }
+};
+
+const processSearch = (dataLimit) => {
+  const searchField = document.getElementById("search-field");
+  const value = searchField.value;
+  if (value.length < 3) {
+    alert("At last need 3 char for search");
+    toggleSpinner(false);
+  } else {
+    toggleSpinner(true);
+    loadPhone(value, dataLimit);
+  }
+};
+
+const loadPhone = async (brand, dataLimit) => {
   const apiUrl = `https://openapi.programming-hero.com/api/phones?search=${brand}`;
   const res = await fetch(apiUrl);
   const data = await res.json();
-  displayPhone(data.data);
+  displayPhones(data.data, dataLimit);
 };
 
-const displayPhone = (phones) => {
+const displayPhones = (phones, dataLimit) => {
   const cardContainer = document.getElementById("card-container");
-  cardContainer.innerHTML = "";
-  phones.forEach((phone) => {
-    const cardDiv = document.createElement("div");
-    cardDiv.classList.add("col", "mb-3");
-    cardDiv.innerHTML = `
+  const errorMessage = document.getElementById("error-message");
+  if (phones.length === 0) {
+    errorMessage.classList.remove("d-none");
+    toggleSpinner(false);
+    cardContainer.innerHTML = "";
+    showAllSection.classList.add("d-none");
+  } else {
+    errorMessage.classList.add("d-none");
+    cardContainer.innerHTML = "";
+
+    // Display 9 phone only
+    if (dataLimit && phones.length > 9) {
+      phones = phones.slice(0, 9);
+      showAllSection.classList.remove("d-none");
+    } else {
+      showAllSection.classList.add("d-none");
+    }
+
+    phones.forEach((phone) => {
+      const cardDiv = document.createElement("div");
+      cardDiv.classList.add("col", "mb-3");
+      cardDiv.innerHTML = `
         <div class="card h-100">
             <div class="text-center p-3">
                 <img src="${phone.image}" class="card-img-top phone-img" alt="${phone.phone_name}">
@@ -27,8 +68,11 @@ const displayPhone = (phones) => {
             </div>
         </div>
       `;
-    cardContainer.appendChild(cardDiv);
-  });
+      cardContainer.appendChild(cardDiv);
+      // Stop loader
+    });
+  }
+  toggleSpinner(false);
 };
 
 const loadPhoneDetails = async (slug) => {
@@ -50,15 +94,23 @@ const displayPhoneDetails = (info) => {
   document.getElementById("chipSet").innerText = info.mainFeatures.chipSet;
 };
 
+// Search Button
 const btnSearch = document.getElementById("btn-search");
 btnSearch.addEventListener("click", function () {
-  const searchText = document.getElementById("search-field");
-  const value = searchText.value;
-  if (value.length < 3) {
-    alert("At last need 3 char for search");
-  } else {
-    loadPhone(value);
+  processSearch(10);
+});
+
+// Search field enter event
+document.getElementById("search-field").addEventListener("keyup", function (e) {
+  if ((e.key === "Enter")) {
+    processSearch(10);
   }
 });
 
-loadPhone("iphone");
+// Show All btn
+const btnShowAll = document.getElementById("btn-show-all");
+btnShowAll.addEventListener("click", function () {
+  processSearch();
+});
+
+// loadPhone("iphone");
