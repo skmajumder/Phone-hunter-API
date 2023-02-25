@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module 34</title>
+    <title>Module 35</title>
     <link rel="shortcut icon" href="img/favicon.svg" type="image/x-icon">
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,23 +16,49 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        #users-list {
-            list-style-type: decimal;
-        }
-
-        button {
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body>
 
+
+    <header class="text-center">
+        <h1>Phone API</h1>
+    </header>
+    <main>
+        <section>
+            <div class="container">
+                <div id="card-container" class="row row-cols-1 row-cols-md-3 g-4">
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal -->
+        <div class="modal fade" id="phoneModal" tabindex="-1" aria-labelledby="phoneModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="phoneModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" id="phone-img" class="img-fluid" alt="">
+                        <p><strong>Storage: </strong><span id="storage"></span></p>
+                        <p><strong>Display Size: </strong><span id="displaySize"></span></p>
+                        <p><strong>Memory: </strong><span id="memory"></span></p>
+                        <p><strong>Chip Set: </strong><span id="chipSet"></span></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
-    <script src="js/quiz.js"></script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>

@@ -12,3 +12,7 @@ input {
 button {
     cursor: pointer;
 }
+
+.phone-img {
+    width: 50%;
+}
