@@ -1,7 +1,7 @@
 "use strict";
 
 const loadPhone = async (brand) => {
-  const apiUrl = `https://openapi.programming-hero.com/api/phones?search=${brand}`
+  const apiUrl = `https://openapi.programming-hero.com/api/phones?search=${brand}`;
   const res = await fetch(apiUrl);
   const data = await res.json();
   displayPhone(data.data);
@@ -9,6 +9,7 @@ const loadPhone = async (brand) => {
 
 const displayPhone = (phones) => {
   const cardContainer = document.getElementById("card-container");
+  cardContainer.innerHTML = "";
   phones.forEach((phone) => {
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("col", "mb-3");
@@ -40,12 +41,24 @@ const loadPhoneDetails = async (slug) => {
 const displayPhoneDetails = (info) => {
   console.log(info);
   document.getElementById("phoneModalLabel").innerText = info.name;
-  document.getElementById('phone-img').src = info.image
-  document.getElementById('phone-img').alt = info.name
-  document.getElementById('storage').innerText = info.mainFeatures.storage
-  document.getElementById('displaySize').innerText = info.mainFeatures.displaySize
-  document.getElementById('memory').innerText = info.mainFeatures.memory
-  document.getElementById('chipSet').innerText = info.mainFeatures.chipSet
+  document.getElementById("phone-img").src = info.image;
+  document.getElementById("phone-img").alt = info.name;
+  document.getElementById("storage").innerText = info.mainFeatures.storage;
+  document.getElementById("displaySize").innerText =
+    info.mainFeatures.displaySize;
+  document.getElementById("memory").innerText = info.mainFeatures.memory;
+  document.getElementById("chipSet").innerText = info.mainFeatures.chipSet;
 };
 
-loadPhone('apple');
+const btnSearch = document.getElementById("btn-search");
+btnSearch.addEventListener("click", function () {
+  const searchText = document.getElementById("search-field");
+  const value = searchText.value;
+  if (value.length < 3) {
+    alert("At last need 3 char for search");
+  } else {
+    loadPhone(value);
+  }
+});
+
+loadPhone("iphone");
